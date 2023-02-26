@@ -18,24 +18,25 @@ import java.util.Set;
 @Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "generation")
-public class Generation {
+@Table(name = "brand")
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long generationId;
+    private Long brandId;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "production_start")
-    private int productionStart = 0;
+    @Column(name = "label")
+    private String label;
 
-    @Column(name = "production_end")
-    private int productionEnd = 0;
+    @Column
+    private String country;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "generation_id")
-    private Set<Body> bodies = new HashSet<>();
+    @JoinColumn(name = "brand_id")
+    private Set<Model> models = new HashSet<>();
+
 }

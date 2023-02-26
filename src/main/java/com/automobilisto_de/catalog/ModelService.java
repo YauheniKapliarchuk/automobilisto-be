@@ -1,7 +1,9 @@
 package com.automobilisto_de.catalog;
 
+import com.automobilisto_de.catalog.entities.Brand;
 import com.automobilisto_de.catalog.entities.Generation;
 import com.automobilisto_de.catalog.entities.Model;
+import com.automobilisto_de.catalog.repositories.BrandRepository;
 import com.automobilisto_de.catalog.repositories.ModelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,10 @@ import java.util.Set;
 public class ModelService {
 
     private final ModelRepository modelRepository;
+    private final BrandRepository brandRepository;
 
     public void getModelsByBrand(String brand) {
-        List<Model> models = modelRepository.getByBrand(brand);
+        List<Model> models = modelRepository.findAll();
 
         for (Model model : models) {
             Set<Generation> generations = model.getGenerations();
@@ -25,25 +28,31 @@ public class ModelService {
     }
 
     public void putData() {
-        Set<Generation> generations = new HashSet<>();
+        Brand brand = new Brand();
+        brand.setName("audi");
+        brand.setLabel("Audi");
 
-        for (int i = 0; i < 10; i++) {
-            Generation generation = new Generation();
-            generation.setId((long) i);
-            generation.setName("test_1_name_" + i);
-            generation.setBrand("test_brand_1");
-            generation.setProductionEnd(2005);
-            generation.setProductionStart(2000);
-            generations.add(generation);
+        Set<Model> models = new HashSet<>();
+        for (int j = 0; j < 10; j++) {
+
+            Model model = new Model();
+            model.setName("Test_model_name_" + j);
+
+            Set<Generation> generations = new HashSet<>();
+
+            for (int i = 0; i < 10; i++) {
+                Generation generation = new Generation();
+
+                generation.setProductionStart(2000);
+                generation.setProductionEnd(2005);
+                generations.add(generation);
+            }
+            model.setGenerations(generations);
+            models.add(model);
         }
 
-        Model model = new Model();
-        model.setId(13L);
-        model.setBrand("test_brand_1");
-        model.setName("test_model_1");
-        model.setGenerations(generations);
-        model.setCountOfGenerations(generations.size());
+        brand.setModels(models);
 
-        modelRepository.save(model);
+        brandRepository.save(brand);
     }
 }

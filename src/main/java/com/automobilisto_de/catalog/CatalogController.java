@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CatalogController {
 
     private final ModelService modelService;
+    private final BrandService brandService;
 
     @GetMapping(value = "/")
-    public String getGenerationsByBrand(@RequestParam String brand) {
-        modelService.getModelsByBrand(brand);
+    public String getModelsByBrand(@RequestParam String brand) {
+        brandService.getModelsByBrand(brand);
 
         return "Done!";
     }
