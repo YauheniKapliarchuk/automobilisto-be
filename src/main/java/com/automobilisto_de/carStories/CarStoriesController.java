@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/carStories")
@@ -21,8 +21,13 @@ public class CarStoriesController {
         return new CarStoryEntity("Acura", "Acura Content", new ArrayList<>());
     }
 
-    @GetMapping()
-    public Set<ModelDTO> getModelsAndGenerations(@RequestParam String brandName) {
-        return carStoriesService.getModelsAndGenerationsByBrand(brandName);
+    @GetMapping("/count_models")
+    public int getCountOfModels(@RequestParam String brandName) {
+        return carStoriesService.getCountModelsByBrandName(brandName);
+    }
+
+    @GetMapping("/photo_tab")
+    public List<Model> getModelsAndGenerations(@RequestParam String brandName, @RequestParam int page) {
+        return carStoriesService.getModelsAndGenerationsByBrand(brandName, page);
     }
 }

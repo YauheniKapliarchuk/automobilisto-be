@@ -32,6 +32,9 @@ public class Model {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "brand_id")
+    private Long brandId;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id")
     private Set<Generation> generations = new HashSet<>();
